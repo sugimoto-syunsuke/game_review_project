@@ -1,0 +1,11 @@
+*.log
+*.pyc
+__pycache__/
+db-volumes/
+db.sqlite3
+# テスト時に保存される画像データは除く
+/web/game_review/media/reviews
+# テスト時のwebドライバーは除く
+*.exe
+# 秘密情報が入っている環境変数ファイルは除く
+.env
