@@ -1,0 +1,27 @@
+<!-- ベーステンプレートを適用 -->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}Mypage{% endblock %}
+
+    {% block contents %}
+    <!-- タイトルテンプレートは組み込まない -->
+    <!-- ユーザの投稿件数を表示 -->
+    {% if user.is_authenticated %}
+        <br>
+        <div style="text-align:center">
+            <h4>{{user.username}}さんのマイページ</h4>
+            {% if object_list.count == 0 %}
+                <p>{{user.username}}さんの投稿はありません</p>
+            {% endif %}
+            <a href="{% url 'review:post' %}" class="btn btn-primary my-2">投稿する</a>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-secondary my-2">ログアウト</a>
+        </div>
+        <hr>
+    {% endif %}
+    <!-- 投稿一覧テンプレートを組み込む -->
+    {% include "reviews_list.html" %}
+    
+    <!-- ページネーションの組み込み -->
+    {% include "pagination.html" %}
+    
+    {% endblock %}

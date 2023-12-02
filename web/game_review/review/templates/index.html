@@ -1,0 +1,16 @@
+<!-- ベーステンプレートを適用 -->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}Game Gallery{% endblock %}
+
+    {% block contents %}
+    <!-- タイトルテンプレートを組み込む -->
+    {% include "reviews_title.html" %}
+    <!-- 検索窓テンプレートを組み込む -->
+    {% include "reviews_search.html" %}
+    <!-- 投稿一覧テンプレートを組み込む -->
+    {% include "reviews_list.html" %}
+    <!-- ページネーションの組み込み -->
+    {% include "pagination.html" %}
+    
+    {% endblock %}
