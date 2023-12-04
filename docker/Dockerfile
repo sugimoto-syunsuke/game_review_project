@@ -1,4 +1,4 @@
-# python:3.8の公式 image をベースの image として設定
+# python:3.11の公式 image をベースの image として設定
 FROM python:3.11
 
 # 作業ディレクトリの作成
