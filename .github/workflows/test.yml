@@ -39,4 +39,7 @@ jobs:
           cd docker
           docker-compose up -d
           docker-compose exec -it docker_game_review bash
-          python3 ../web/game_review/manage.py test review
+          cd ../web/
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python3 ./game_review/manage.py test review
