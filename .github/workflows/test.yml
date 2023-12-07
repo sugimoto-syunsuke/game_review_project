@@ -39,4 +39,9 @@ jobs:
           cd docker
           docker-compose up -d
           docker-compose exec -it docker_game_review bash
+          pwd
+          ls -l
+          cd ..
+          pwd
+          ls -l
           python3 ./game_review/manage.py test review
