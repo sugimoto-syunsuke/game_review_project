@@ -40,8 +40,8 @@ jobs:
           docker-compose build
           docker-compose up -d
           docker-compose exec -it docker_game_review bash
-          apt update
-          apt install -y dnsutils
+          sudo apt update
+          sudo apt install -y dnsutils
           dig selenium
           curl -v http://selenium:4444/wd/hub
           cd ../web/
