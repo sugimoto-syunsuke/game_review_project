@@ -36,6 +36,7 @@ jobs:
           EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
           EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
         run: |
+          whoami
           apt update
           apt install -y iputils-ping net-tools
           curl -v http://selenium:4444/wd/hub
