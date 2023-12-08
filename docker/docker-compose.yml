@@ -11,14 +11,15 @@ services:
     container_name: docker_game_review
     tty: true # ポート待受とかしていないコンテナの場合、trueに設定しておくとコンテナが起動し続けます
     working_dir: '/game_review'
-    command: python3 ./game_review/manage.py runserver 0:8000
-    links:
-      - selenium
+    networks:
+      - web
   selenium:
     image: selenium/standalone-chrome-debug
     container_name: 'django.selenium'
     ports:
       - 4444:4444
       - 5900:5900
-
-
+    networks:
+            - web
+networks:
+    web:
