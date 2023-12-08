@@ -39,6 +39,8 @@ jobs:
           cd docker
           docker-compose build
           docker-compose up -d
+          docker ps -a
+          docker network ls
           docker-compose exec -it docker_game_review bash
           sudo apt update
           sudo apt install -y dnsutils
