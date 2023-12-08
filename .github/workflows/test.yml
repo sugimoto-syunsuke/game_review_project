@@ -37,9 +37,9 @@ jobs:
           EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
         run: |
           cd docker
+          docker-compose build
           docker-compose up -d
           docker-compose exec -it docker_game_review bash
-          whoami
           curl -v http://selenium:4444/wd/hub
           cd ../web/
           python3 -m pip install --upgrade pip
