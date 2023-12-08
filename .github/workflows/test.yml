@@ -36,6 +36,9 @@ jobs:
           EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
           EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
         run: |
+          apt update
+          apt install -y dnsutils
+          dig selenium
           cd docker
           docker-compose build
           docker-compose up -d
