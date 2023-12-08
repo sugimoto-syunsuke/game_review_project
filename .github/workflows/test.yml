@@ -36,6 +36,9 @@ jobs:
           EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
           EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
         run: |
+          apt update
+          apt install -y iputils-ping net-tools
+          curl -v http://selenium:4444/wd/hub
           cd docker
           docker-compose up -d
           docker-compose exec -it docker_game_review bash
