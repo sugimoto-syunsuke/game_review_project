@@ -39,8 +39,6 @@ jobs:
           cd docker
           docker-compose build
           docker-compose up -d
-          docker ps -a
-          docker network ls
           docker-compose exec -it docker_game_review bash
           cat /etc/systemd/resolved.conf
           sudo apt update
