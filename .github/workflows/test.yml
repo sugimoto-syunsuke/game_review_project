@@ -43,9 +43,9 @@ jobs:
           docker network ls
           docker-compose exec -it docker_game_review bash
           cat /etc/systemd/resolved.conf
-          
           sudo apt update
           sudo apt install -y dnsutils
+          sudo echo 'nameserver 127.0.0.11' | tee /etc/resolv.conf
           dig selenium
           curl -v http://selenium:4444/wd/hub
           cd ../web/
