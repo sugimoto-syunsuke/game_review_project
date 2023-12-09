@@ -1,4 +1,5 @@
 import socket
+import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 from selenium import webdriver
@@ -18,7 +19,7 @@ class LoginTest(StaticLiveServerTestCase):
         # ホストを外部からアクセス可能な Web サーバーのアドレスに設定する
         cls.host = socket.gethostbyname(socket.gethostname())
         cls.selenium = webdriver.Remote(
-                        command_executor="http://selenium:4444/wd/hub",
+                        command_executor="http://" + os.environ['SELENIUM_IP'] + ":4444/wd/hub",
                         options=webdriver.ChromeOptions()
                         )
         cls.selenium.implicitly_wait(5)
