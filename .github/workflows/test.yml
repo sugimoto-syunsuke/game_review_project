@@ -39,10 +39,11 @@ jobs:
           cd docker
           docker-compose build
           docker-compose up -d
+          echo "docker_game_review IPAddress \n"
+          docker inspect docker_game_review | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
+          echo "django.selenium IPAddress \n"
           docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
           docker-compose exec -it docker_game_review bash
-          docker inspect docker_game_review | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
-          docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
           sudo apt-get update
           sudo apt-get install iputils-ping net-tools
           ping -c 3 172.18.0.3
