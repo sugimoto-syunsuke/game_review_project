@@ -44,7 +44,7 @@ jobs:
           echo "django.selenium IPAddress \n"
           docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
           SELENIUM_IP=`docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'`
-          docker exec -e SELENIUM_IP=$SELENIUM_IP -it docker_game_review bash
+          docker exec -it docker_game_review bash
           sudo apt-get update
           sudo apt-get install iputils-ping net-tools
           ping -c 3 $SELENIUM_IP
