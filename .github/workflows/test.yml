@@ -39,14 +39,13 @@ jobs:
           cd docker
           docker-compose build
           docker-compose up -d
-          docker-compose exec -it docker_game_review bash
-          cat /etc/systemd/resolved.conf
-          sudo apt update
-          sudo apt install -y dnsutils
-          sudo echo 'nameserver 127.0.0.11' | sudo tee /etc/resolv.conf
-          dig selenium
-          curl -v http://selenium:4444/wd/hub
-          cd ../web/
-          python3 -m pip install --upgrade pip
-          pip install -r requirements.txt
-          python3 ./game_review/manage.py test review
+          docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
+          # docker-compose exec -it docker_game_review bash
+          # sudo apt update
+          # sudo apt install -y dnsutils
+          # dig selenium
+          # curl -v http://selenium:4444/wd/hub
+          # cd ../web/
+          # python3 -m pip install --upgrade pip
+          # pip install -r requirements.txt
+          # python3 ./game_review/manage.py test review
