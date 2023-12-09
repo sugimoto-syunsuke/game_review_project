@@ -44,11 +44,11 @@ jobs:
           echo "django.selenium IPAddress \n"
           docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
           SELENIUM_IP=`docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'`
-          docker-compose exec -it -e SELENIUM_IP=$SELENIUM_IP docker_game_review bash
+          docker-compose exec -e SELENIUM_IP=$SELENIUM_IP docker_game_review bash
           sudo apt-get update
           sudo apt-get install iputils-ping net-tools
           ping -c 3 $SELENIUM_IP
-          curl -v  curl -v  http://$TEST_IP_SELENIUM:4444/wd/hub/static/resource/hub.html
+          curl -v  http://$SELENIUM_IP:4444/wd/hub/static/resource/hub.html
           # cd ../web/
           # python3 -m pip install --upgrade pip
           # pip install -r requirements.txt
