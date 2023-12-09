@@ -50,8 +50,7 @@ jobs:
           sudo apt-get install iputils-ping net-tools
           ping -c 3 $SELENIUM_IP
           curl -v  http://$SELENIUM_IP:4444/wd/hub/static/resource/hub.html
-          printenv
-          # cd ../web/
-          # python3 -m pip install --upgrade pip
-          # pip install -r requirements.txt
-          # python3 ./game_review/manage.py test review
+          cd ../web/
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python3 ./game_review/manage.py test review
