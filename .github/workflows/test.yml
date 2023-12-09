@@ -40,10 +40,12 @@ jobs:
           docker-compose build
           docker-compose up -d
           docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
-          # docker-compose exec -it docker_game_review bash
-          # sudo apt update
-          # sudo apt install -y dnsutils
-          # dig selenium
+          docker-compose exec -it docker_game_review bash
+          docker inspect docker_game_review | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
+          docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
+          sudo apt-get update
+          sudo apt-get install iputils-ping net-tools
+          ping -c 3 172.18.0.3
           # curl -v http://selenium:4444/wd/hub
           # cd ../web/
           # python3 -m pip install --upgrade pip
