@@ -44,9 +44,10 @@ urlpatterns = [
 ]
 
 # urlpatternsにmediaフォールだーのURLパターンを追加
-urlpatterns += static(
-    # MEDIA_URL = 'media/'
-    settings.MEDIA_URL,
-    # MEDIA_ROOTにリダイレクト
-    document_root=settings.MEDIA_ROOT
+if settings.DEBUG:
+    urlpatterns += static(
+        # MEDIA_URL = 'media/'
+        settings.MEDIA_URL,
+        # MEDIA_ROOTにリダイレクト
+        document_root=settings.MEDIA_ROOT
     )
