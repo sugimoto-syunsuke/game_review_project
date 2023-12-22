@@ -9,3 +9,5 @@ db.sqlite3
 *.exe
 # 秘密情報が入っている環境変数ファイルは除く
 .env
+# テスト等の時に作られる静的ファイルは除く
+/web/game_review/static

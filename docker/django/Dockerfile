@@ -12,6 +12,3 @@ ADD web /game_review
 
 # pipでrequirements.txtに指定されているパッケージを追加する
 RUN pip install -r requirements.txt
-
-# 起動(今回はなし)
-# CMD python3 manage.py runserver 0.0.0.0:8000

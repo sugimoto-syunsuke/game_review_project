@@ -1,0 +1,37 @@
+version: '3'
+services:
+  mysite:
+    build:
+      context: ../
+      dockerfile: ./docker/django/Dockerfile # Dockerfileのディレクトリを指定します
+    volumes:
+      - ../web:/game_review
+    # 8000番ポートをNginx側が接続できるよう開く
+    expose:
+      - "8000"
+    command: sh -c "/game_review/game_review/entrypoint.sh"
+    # コンテナ内の環境変数を.docker_env_prodを使って設定
+    env_file:
+      - .docker_env_prod
+    container_name: docker_game_review
+    working_dir: /game_review
+    networks:
+      - web
+  web_server:
+    container_name: web_server
+    build:
+      context: ../
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ../web/game_review/reviewproject/static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - mysite
+    networks:
+      - web
+networks:
+  web:
+volumes:
+  db_data:
+  static:
