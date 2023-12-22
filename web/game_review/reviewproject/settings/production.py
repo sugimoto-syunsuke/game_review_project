@@ -38,5 +38,5 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 # バケット名
 AWS_STORAGE_BUCKET_NAME = 'game-review-django'
 # 保存先URL
-STATIC_URL = 'https://%s.s3.ap-northeast-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = 'https://%s.s3.ap-northeast-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 AWS_LOCATION = 'media'
