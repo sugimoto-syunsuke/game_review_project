@@ -6,7 +6,7 @@ name: docker-compose
 on:
   push:
     branches:
-      - master
+      - develop
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -37,12 +37,8 @@ jobs:
           EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
         run: |
           cd docker
-          docker-compose build
-          docker-compose up -d
-          echo "docker_game_review IPAddress \n"
-          docker inspect docker_game_review | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
-          echo "django.selenium IPAddress \n"
-          docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'
+          docker-compose -f docker-compose.dev.yml build --progress=plain
+          docker-compose -f docker-compose.dev.yml up -d
           SELENIUM_IP=`docker inspect django.selenium | grep IPAddress | cut -d '"' -f 4 | grep -v '^\s*$'`
           docker-compose exec -it -e SELENIUM_IP=$SELENIUM_IP docker_game_review bash
           export SELENIUM_IP
