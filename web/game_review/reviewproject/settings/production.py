@@ -10,8 +10,9 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# AWSで許可されてるホストを記入
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','localhost']
+# ホスト名かIPアドレスを記載
+# TODO ドメインを買っていない状態で、インスタンス停止の度にIPが変わるので、一旦全ホスト許可とする
+ALLOWED_HOSTS = ["*"]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
