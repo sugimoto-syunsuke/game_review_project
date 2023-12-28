@@ -48,4 +48,4 @@ jobs:
          # SSH接続して、git pullし、dockerを再起動する
          echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
          chmod 600 private_key
-         ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd game_review_project && git pull origin main && cd dokcer && docker restart $(docker ps -aq)"
+         ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd game_review_project && git pull origin master && cd dokcer && docker restart $(docker ps -aq)"
