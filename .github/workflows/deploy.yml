@@ -45,7 +45,7 @@ jobs:
      # デプロイする
      - name: Deploy
        run: |
-         # SSH接続して、git pullし、dockerを再起動する
+         # SSH接続して、git pullし、dockerの各コンテナを再起動する
          echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
          chmod 600 private_key
-         ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd game_review_project && git pull origin master && cd dokcer && docker restart $(docker ps -aq)"
+         ssh -oStrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} -i private_key "cd game_review_project && git pull origin master && docker restart $(docker ps -aq)"
