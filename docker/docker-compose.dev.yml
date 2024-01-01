@@ -8,7 +8,7 @@ services:
       - ../web:/game_review
     ports:
       - "50030:8000" # 左側が外部からのアクセス時のポート番号:右側がdockerコンテナからアクセスする時のポート番号。ホストの8000番からコンテナの8000番へポートフォワードしています
-    command: sh -c "/game_review/game_review/entrypoint.sh"
+    command: sh -c "/game_review/game_review/entrypoint.sh 1" # 引数0:本番環境 1:開発環境
     container_name: docker_game_review
     tty: true # ポート待受とかしていないコンテナの場合、trueに設定しておくとコンテナが起動し続けます
     working_dir: /game_review

@@ -9,7 +9,7 @@ services:
     # 8000番ポートをNginx側が接続できるよう開く
     expose:
       - "8000"
-    command: sh -c "/game_review/game_review/entrypoint.sh"
+    command: sh -c "/game_review/game_review/entrypoint.sh 0" # 引数0:本番環境 1:開発環境
     # コンテナ内の環境変数を.docker_env_prodを使って設定
     env_file:
       - .docker_env_prod
