@@ -3,6 +3,7 @@
 __pycache__/
 db-volumes/
 db.sqlite3
+migrations/
 # テスト時に保存される画像データは除く
 /web/game_review/media/reviews
 # テスト時のwebドライバーは除く
