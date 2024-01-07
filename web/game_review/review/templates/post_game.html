@@ -1,7 +1,7 @@
 <!-- ベーステンプレートを適用 -->
 {% extends 'base.html' %}
 <!-- ヘッダー情報のページタイトルを設定する -->
-{% block title %}Post{% endblock %}
+{% block title %}GamePost{% endblock %}
 
     {% block contents %}
     <!-- Bootstrapのグリッドシステム -->
@@ -17,7 +17,7 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <hr>
-                    <button type="submit" class="btn btn-primary my-2">投稿する</button>
+                    <button type="submit" class="btn btn-primary my-2">ゲームを追加する</button>
                 </form>                                                                                             
             </div>
         </div>

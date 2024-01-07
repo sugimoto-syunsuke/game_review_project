@@ -15,7 +15,8 @@
           <!-- ナビゲーションボタン -->
           {% if user.is_authenticated %}
           <!-- ログイン中のボタン -->
-          <a href="{% url 'review:post' %}" class="btn btn-primary my-2">投稿する</a>
+          <a href="{% url 'review:post' %}" class="btn btn-primary my-2">レビューを投稿する</a>
+          <a href="{% url 'review:post_game' %}" class="btn btn-info my-2">ゲームを追加する</a>
           <a href="{% url 'accounts:logout' %}" class="btn btn-secondary my-2">ログアウト</a>
           {% else %}
           <a href="{% url 'accounts:signup' %}" class="btn btn-primary my-2" name="signup_now">今すぐサインアップ</a>

@@ -37,7 +37,7 @@ urlpatterns = [
         views.MypageView.as_view(),
         name='mypage'),
    
-   # 投稿写真の削除
+   # 投稿レビューの削除
    # reviews/<Review postsテーブルのid値>にマッチング
    # <int:pk>は辞書{pk: id値(int) }としてDetailViewに渡される
    path('review/<int:pk>/delete',
@@ -45,4 +45,11 @@ urlpatterns = [
         name = 'review_delete'
         ),
    
+   # ゲーム追加ページ
+   path('post_game/', views.CreateGameView.as_view(), name='post_game'),
+   
+   # ゲーム追加完了ページ
+   path('post_game_done/',
+        views.PostSuccessView.as_view(),
+        name='post_game_done'),
 ]
