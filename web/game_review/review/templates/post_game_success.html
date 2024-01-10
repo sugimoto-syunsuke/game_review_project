@@ -1,7 +1,7 @@
 <!-- ベーステンプレートを適用 -->
 {% extends 'base.html' %}
 <!-- ヘッダー情報のページタイトルを設定する -->
-{% block title %}Post Success{% endblock %}
+{% block title %}Post Game Success{% endblock %}
 
     {% block contents %}
     <!-- Bootstrapのグリッドシステム -->
@@ -11,7 +11,7 @@
         <div class="row">
             <!-- 列の左右に余白offset-2を入れる -->
             <div class="col offset-2">
-                <h4>投稿が完了しました！</h4>
+                <h4>投稿できるゲームを追加しました！</h4>
                 <a href="{% url 'review:index' %}" class="btn btn-primary my-2">TOPへ戻る</a>
             </div>
         </div>

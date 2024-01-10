@@ -11,7 +11,7 @@ class Game(models.Model):
     
     # イメージのフィールド１
     image1 = models.ImageField(
-        verbose_name='イメージ１', # フィールドのタイトル
+        verbose_name='ゲーム画像', # フィールドのタイトル
         upload_to = 'reviews' # MEDIA_ROOT以下のreviewsにファイルを保存
         )
     
