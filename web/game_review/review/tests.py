@@ -12,27 +12,29 @@ from accounts.models import CustomUser
 from selenium.webdriver.chrome.service import Service
 
 @override_settings(ALLOWED_HOSTS=['*'])
-class LoginTest(StaticLiveServerTestCase):
-    # dockerのseleniumコンテナ経由でテストするする場合、下記のhostを定義
-    host = '0.0.0.0' #外部アクセスを許可するために0.0.0.0をバインドする
+class ReviewTest(StaticLiveServerTestCase):
+    # テストの実行環境がlinuxかwindows（ローカル）かで、だし分けが必要な変数を定義する。
+    if os.name == 'posix':
+        host = '0.0.0.0' #外部アクセスを許可するために0.0.0.0をバインドする
+        uploaded_image_path = os.getcwd() + '/reviewproject/static/img/test.png'
+    else:
+        uploaded_image_path = os.getcwd() + '\\reviewproject\\static\\img\\test.png'
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        ## dockerのseleniumコンテナ経由でテストするする場合
-        ## ホストを外部からアクセス可能な Web サーバーのアドレスに設定する
-        ## ここから
-        cls.host = socket.gethostbyname(socket.gethostname())
-        cls.selenium = webdriver.Remote(
-                        command_executor="http://" + os.environ['SELENIUM_IP'] + ":4444/wd/hub",
-                        options=webdriver.ChromeOptions()
-                        )
-        ## ここまで 
-        ## ローカルのchromeブラウザ経由でテストする場合
-        ## staticディレクトリ内のドライバを利用する
-        ## ここから
-        #service = Service(executable_path='./reviewproject/static/chromedriver.exe')
-        #cls.selenium = webdriver.Chrome(service=service)
-        ## ここまで
+        # dockerのseleniumコンテナ経由でテストするする場合
+        # ホストを外部からアクセス可能な Web サーバーのアドレスに設定する
+        # ローカル(windows)のchromeブラウザ経由でテストする場合
+        # staticディレクトリ内のドライバを利用する
+        if os.name == 'posix':
+            cls.host = socket.gethostbyname(socket.gethostname())
+            cls.selenium = webdriver.Remote(
+                            command_executor="http://" + os.environ['SELENIUM_IP'] + ":4444/wd/hub",
+                            options=webdriver.ChromeOptions()
+                            )
+        else:
+            service = Service(executable_path='./reviewproject/static/chromedriver.exe')
+            cls.selenium = webdriver.Chrome(service=service)
         cls.selenium.implicitly_wait(5)
 
     @classmethod
@@ -971,7 +973,7 @@ class LoginTest(StaticLiveServerTestCase):
         game_title_input = self.selenium.find_element(By.NAME, "title")
         game_title_input.send_keys('ゲームタイトルテスト')
         game_image_input = self.selenium.find_element(By.NAME, "image1")
-        game_image_input.send_keys(os.getcwd() + '\\reviewproject\\static\\img\\test.png')
+        game_image_input.send_keys(self.uploaded_image_path)
         click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/form/button")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Post Success', self.selenium.title)
@@ -1006,7 +1008,7 @@ class LoginTest(StaticLiveServerTestCase):
         game_title_input = self.selenium.find_element(By.NAME, "title")
         game_title_input.clear()
         game_image_input = self.selenium.find_element(By.NAME, "image1")
-        game_image_input.send_keys(os.getcwd() + '\\reviewproject\\static\\img\\test.png')
+        game_image_input.send_keys(self.uploaded_image_path)
         click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/form/button")
         self.selenium.execute_script("arguments[0].click();", click_link)
         # 画面が遷移していないことを確認
