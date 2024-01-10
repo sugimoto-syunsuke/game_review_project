@@ -9,19 +9,30 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from .models import Game, ReviewPost
 from accounts.models import CustomUser
+from selenium.webdriver.chrome.service import Service
 
 @override_settings(ALLOWED_HOSTS=['*'])
 class LoginTest(StaticLiveServerTestCase):
+    # dockerのseleniumコンテナ経由でテストするする場合、下記のhostを定義
     host = '0.0.0.0' #外部アクセスを許可するために0.0.0.0をバインドする
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # ホストを外部からアクセス可能な Web サーバーのアドレスに設定する
+        ## dockerのseleniumコンテナ経由でテストするする場合
+        ## ホストを外部からアクセス可能な Web サーバーのアドレスに設定する
+        ## ここから
         cls.host = socket.gethostbyname(socket.gethostname())
         cls.selenium = webdriver.Remote(
                         command_executor="http://" + os.environ['SELENIUM_IP'] + ":4444/wd/hub",
                         options=webdriver.ChromeOptions()
                         )
+        ## ここまで 
+        ## ローカルのchromeブラウザ経由でテストする場合
+        ## staticディレクトリ内のドライバを利用する
+        ## ここから
+        #service = Service(executable_path='./reviewproject/static/chromedriver.exe')
+        #cls.selenium = webdriver.Chrome(service=service)
+        ## ここまで
         cls.selenium.implicitly_wait(5)
 
     @classmethod
@@ -271,7 +282,7 @@ class LoginTest(StaticLiveServerTestCase):
         Game.objects.create(title='テスト用ゲーム', image1='../static/img/test.png')
         self.test_login_success()
         # レビュー投稿ページへ遷移
-        click_link = self.selenium.find_element(By.LINK_TEXT, "投稿する")
+        click_link = self.selenium.find_element(By.LINK_TEXT, "レビューを投稿する")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Post', self.selenium.title)
         # 投稿するレビュー情報を入れ、投稿ボタンを押下する
@@ -294,7 +305,7 @@ class LoginTest(StaticLiveServerTestCase):
         Game.objects.create(title='テスト用ゲーム', image1='../static/img/test.png')
         self.test_login_success()
         # レビュー投稿ページへ遷移
-        click_link = self.selenium.find_element(By.LINK_TEXT, "投稿する")
+        click_link = self.selenium.find_element(By.LINK_TEXT, "レビューを投稿する")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Post', self.selenium.title)
         # ゲーム未選択で投稿できないことを確認
@@ -431,7 +442,7 @@ class LoginTest(StaticLiveServerTestCase):
         click_link = self.selenium.find_element(By.XPATH, "/html/body/header/div[2]/div/a/strong")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Game Gallery', self.selenium.title)
-        click_link = self.selenium.find_element(By.LINK_TEXT, "投稿する")
+        click_link = self.selenium.find_element(By.LINK_TEXT, "レビューを投稿する")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Post', self.selenium.title)
         game_input = self.selenium.find_element(By.NAME, "game")
@@ -693,7 +704,7 @@ class LoginTest(StaticLiveServerTestCase):
         # ページタイトルの検証
         self.assertEquals('Game Gallery', self.selenium.title)
         # 投稿ページへのリンクをクリック
-        click_link = self.selenium.find_element(By.LINK_TEXT, "投稿する")
+        click_link = self.selenium.find_element(By.LINK_TEXT, "レビューを投稿する")
         self.selenium.execute_script("arguments[0].click();", click_link)
         # ページタイトルの検証
         self.assertEquals('Post', self.selenium.title)
@@ -840,7 +851,7 @@ class LoginTest(StaticLiveServerTestCase):
         Game.objects.create(title='テスト用ゲーム', image1='../static/img/test.png')
         self.test_login_success()
         # レビュー投稿ページへ遷移
-        click_link = self.selenium.find_element(By.LINK_TEXT, "投稿する")
+        click_link = self.selenium.find_element(By.LINK_TEXT, "レビューを投稿する")
         self.selenium.execute_script("arguments[0].click();", click_link)
         self.assertEquals('Post', self.selenium.title)
         # 投稿できないレビュー情報を入れ、投稿ボタンを押下する
@@ -948,3 +959,56 @@ class LoginTest(StaticLiveServerTestCase):
         # ページタイトルの検証
         self.assertEquals('Game Gallery', self.selenium.title)
         print("画面遷移テスト：ログアウト画面　完了")
+    
+    def test_game_add_success(self):
+        ### ゲームの追加テスト 2o23/1/10追加
+        self.test_login_success()
+        # レビュー投稿ページへ遷移
+        click_link = self.selenium.find_element(By.LINK_TEXT, "ゲームを追加する")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        self.assertEquals('GamePost', self.selenium.title)
+        # ゲーム情報を入力し、追加ボタンを押下する
+        game_title_input = self.selenium.find_element(By.NAME, "title")
+        game_title_input.send_keys('ゲームタイトルテスト')
+        game_image_input = self.selenium.find_element(By.NAME, "image1")
+        game_image_input.send_keys(os.getcwd() + '\\reviewproject\\static\\img\\test.png')
+        click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/form/button")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        self.assertEquals('Post Success', self.selenium.title)
+        # TOP画面に戻る
+        click_link = self.selenium.find_element(By.LINK_TEXT, "TOPへ戻る")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        self.assertEquals('Game Gallery', self.selenium.title)
+        print("画面遷移テスト：ゲーム追加画面　完了")
+        # ディティール画面へ遷移
+        click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/div[1]/div/rect/div/div/div/button")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        self.assertEquals('Game Detail', self.selenium.title)
+        # ゲームタイトルが想定のものになっているか確認
+        self.assertIn("ゲームタイトルテスト", self.selenium.find_element(By.TAG_NAME, "body").text)
+        print("正常テスト：ゲーム追加処理　完了")
+    
+    def test_game_add_failure(self):
+        ### ゲームの追加失敗テスト 2o23/1/10追加
+        self.test_login_success()
+        # レビュー投稿ページへ遷移
+        click_link = self.selenium.find_element(By.LINK_TEXT, "ゲームを追加する")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        self.assertEquals('GamePost', self.selenium.title)
+        # ゲーム画像を設定せず、追加ボタンを押下する
+        game_title_input = self.selenium.find_element(By.NAME, "title")
+        game_title_input.send_keys('ゲームタイトルテスト')
+        click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/form/button")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        # 画面が遷移していないことを確認
+        self.assertEquals('GamePost', self.selenium.title)
+        # ゲームタイトルを設定せず、追加ボタンを押下する
+        game_title_input = self.selenium.find_element(By.NAME, "title")
+        game_title_input.clear()
+        game_image_input = self.selenium.find_element(By.NAME, "image1")
+        game_image_input.send_keys(os.getcwd() + '\\reviewproject\\static\\img\\test.png')
+        click_link = self.selenium.find_element(By.XPATH, "/html/body/main/div/div/div/form/button")
+        self.selenium.execute_script("arguments[0].click();", click_link)
+        # 画面が遷移していないことを確認
+        self.assertEquals('GamePost', self.selenium.title)
+        print("バリデーションチェック：ゲーム追加処理　完了")
