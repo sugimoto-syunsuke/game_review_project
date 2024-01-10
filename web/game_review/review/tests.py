@@ -16,7 +16,7 @@ class ReviewTest(StaticLiveServerTestCase):
     # テストの実行環境がlinuxかwindows（ローカル）かで、だし分けが必要な変数を定義する。
     if os.name == 'posix':
         host = '0.0.0.0' #外部アクセスを許可するために0.0.0.0をバインドする
-        uploaded_image_path = os.getcwd() + '/reviewproject/static/img/test.png'
+        uploaded_image_path = os.getcwd() + '/game_review/reviewproject/static/img/test.png'
     else:
         uploaded_image_path = os.getcwd() + '\\reviewproject\\static\\img\\test.png'
     @classmethod
