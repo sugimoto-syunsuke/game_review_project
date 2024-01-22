@@ -25,6 +25,7 @@ DATABASES = {
         'PASSWORD': os.environ['DATABASE_PASSWORD'],    # RDSで作成したユーザーのパスワード
         'HOST': os.environ['DATABASE_HOST'],
         'PORT': os.environ['DATABASE_PORT'],
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
